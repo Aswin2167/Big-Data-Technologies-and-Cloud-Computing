@@ -1,0 +1,39 @@
+::Q1::Which of the following best defines "Volume" in the context of Big Data?
+{
+=Represents the massive scale of data generated, stored, and processed, often reaching petabytes or more.
+~Represents the speed at which data is generated and processed.
+~Represents the variety of formats and sources of data.
+~Represents the reduction of data size for storage efficiency.
+}
+
+::Q2::Real-time stock trading data is an example of which Big Data characteristic?
+{
+~Volume
+=Velocity
+~Variety
+~Veracity
+}
+
+::Q3::Which Big Data characteristic deals with the diversity of data formats such as structured, semi-structured, and unstructured?
+{
+~Velocity
+~Volume
+=Variety
+~Value
+}
+
+::Q4::Processing petabytes of experimental data from the Large Hadron Collider falls under which Big Data "V"?
+{
+=Volume
+~Velocity
+~Variety
+~Veracity
+}
+
+::Q5::The need for real-time analytics to process data from autonomous vehicle sensors is driven by which Big Data dimension?
+{
+~Volume
+=Velocity
+~Variety
+~Veracity
+}

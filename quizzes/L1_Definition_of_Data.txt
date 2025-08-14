@@ -1,0 +1,39 @@
+::Q1::In the context of data science, what does the term "data" refer to?
+{
+~It refers only to numerical values collected from experiments.
+~It refers only to structured datasets stored in relational databases.
+~It refers only to facts after being processed into meaningful information.
+=It refers to raw, unorganized facts, figures, or information collected for analysis.
+}
+
+::Q2::Which of the following is NOT a feature of structured data?
+{
+~Follows a predefined schema.
+~Organized in tables with rows and columns.
+~Easy to search and analyze using SQL.
+=Requires more sophisticated tools and techniques for processing.
+}
+
+::Q3::Which of the following is an example of semi-structured data?
+{
+=JSON files
+~CSV files
+~Images
+~Relational database tables
+}
+
+::Q4::Unstructured data is typically characterized by:
+{
+~Being stored in a fixed tabular format.
+=Having no predefined schema or structure.
+~Following a rigid data model.
+~Being easier to process using traditional relational database methods.
+}
+
+::Q5::Which of the following best matches the example with the data type?
+{
+=Text documents – Unstructured data
+~XML – Structured data
+~Relational databases – Unstructured data
+~Sensor raw data – Structured data
+}

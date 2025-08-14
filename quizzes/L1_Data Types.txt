@@ -1,0 +1,39 @@
+::Q1::Which of the following best describes discrete numerical data?
+{
+=Represents countable values that can only take specific, distinct values.
+~Represents measurements that can take any value within a range.
+~Represents qualitative values without a natural order.
+~Represents categories with a meaningful order.
+}
+
+::Q2::Which of the following is an example of ordinal categorical data?
+{
+~Blood Type (A, B, AB, O)
+=Customer Satisfaction Rating (Very Dissatisfied, Dissatisfied, Neutral, Satisfied, Very Satisfied)
+~Colors (Red, Blue, Green)
+~Temperature readings in Celsius
+}
+
+::Q3::Time-series data is primarily characterized by:
+{
+~Having no relation to time order.
+~Being purely categorical in nature.
+=Being a sequence of data points collected over time where order is important.
+~Representing locations or shapes on Earth's surface.
+}
+
+::Q4::Which of the following is NOT an example of spatial data?
+{
+~Road networks
+~GPS coordinates
+~Boundaries of countries
+=Monthly sales figures
+}
+
+::Q5::Multimedia data may include which combination of elements?
+{
+=Text, images, audio, and video
+~Only text and images
+~Only audio and video
+~Only images and GPS coordinates
+}

@@ -1,0 +1,39 @@
+::Q1::Which Big Data dimension refers to the truthfulness, accuracy, and trustworthiness of the data?
+{
+=Veracity
+~Validity
+~Value
+~Vulnerability
+}
+
+::Q2::A dataset might be accurate in its raw form but not suitable for the intended analysis. This describes which Big Data dimension?
+{
+~Veracity
+=Validity
+~Variability
+~Visualization
+}
+
+::Q3::Which Big Data dimension focuses on transforming raw data into meaningful insights that lead to business or societal benefits?
+{
+~Veracity
+=Value
+~Visualization
+~Vulnerability
+}
+
+::Q4::Fluctuating data flow rates, such as spikes in website traffic during an online sale, best illustrate which Big Data dimension?
+{
+~Variety
+=Variability
+~Velocity
+~Veracity
+}
+
+::Q5::Which Big Data dimension deals with the security risks associated with storing and processing large and diverse datasets?
+{
+~Veracity
+~Value
+~Visualization
+=Vulnerability
+}

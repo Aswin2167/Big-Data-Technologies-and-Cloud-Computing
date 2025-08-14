@@ -1,0 +1,39 @@
+::Q1::Which stage of the data lifecycle involves creating or collecting raw data from various sources?
+{
+=Data Generation
+~Data Storage
+~Data Processing
+~Data Visualization
+}
+
+::Q2::In which stage is raw data cleaned, transformed, and integrated to prepare it for analysis?
+{
+~Data Generation
+~Data Storage
+=Data Processing
+~Data Visualization
+}
+
+::Q3::The process of applying statistical methods and machine learning algorithms to discover insights belongs to which data lifecycle stage?
+{
+~Data Processing
+=Data Analysis
+~Data Storage
+~Archiving/Deletion
+}
+
+::Q4::Presenting analytical results as charts, graphs, dashboards, or maps occurs in which data lifecycle stage?
+{
+~Data Analysis
+~Data Processing
+=Data Visualization
+~Data Storage
+}
+
+::Q5::Which stage of the data lifecycle focuses on retaining data for compliance or securely removing it when no longer needed?
+{
+~Data Storage
+~Data Processing
+~Data Visualization
+=Archiving/Deletion
+}
