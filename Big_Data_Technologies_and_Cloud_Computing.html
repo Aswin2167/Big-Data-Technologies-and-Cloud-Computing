@@ -53,7 +53,609 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .s1 { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Single */
 .highlight .ss { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Symbol */
 .highlight .il { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Integer.Long */
+    /* Modern sidebar styles */
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f7f8fa;
+    }
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 240px;
+      background: #232946;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 32px 0 0 0;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.04);
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 100;
+    }
+    .sidebar h2 {
+      color: #eebbc3;
+      text-align: center;
+      margin-bottom: 32px;
+      font-size: 1.3em;
+      letter-spacing: 1px;
+    }
+    .sidebar button {
+      background: none;
+      border: none;
+      color: #fff;
+      padding: 18px 32px;
+      text-align: left;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      outline: none;
+      border-left: 4px solid transparent;
+    }
+    .sidebar button.active, .sidebar button:hover {
+      background: #eebbc3;
+      color: #232946;
+      border-left: 4px solid #232946;
+      font-weight: bold;
+    }
+    .main-content {
+      margin-left: 240px;
+      padding: 40px 32px 32px 32px;
+      width: calc(100% - 240px);
+      background: #f7f8fa;
+      min-height: 100vh;
+      box-sizing: border-box;
+      transition: margin-left 0.2s;
+      overflow-x: auto;
+    }
+    @media (max-width: 700px) {
+      .sidebar { width: 60px; padding: 8px 0; }
+      .sidebar button { font-size: 0.9em; padding: 12px 8px; }
+      .main-content { margin-left: 60px; padding: 16px 8px; }
+    }
+    .hidden-section { display: none !important; }
+    .visible-section { display: block !important; }
+
+    /* Modern main page card styles */
+    .main-card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 32px 0 rgba(35,41,70,0.13);
+      padding: 40px 36px 32px 36px;
+      margin: 32px auto 0 auto;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1.5px solid #e6e6e6;
+      transition: box-shadow 0.2s;
+    }
+    .main-card-header {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .main-logo {
+      width: 120px;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px 0 rgba(35,41,70,0.08);
+      background: #fff;
+      padding: 8px;
+    }
+    .main-title-group {
+      text-align: left;
+    }
+    .main-univ {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #232946;
+      margin: 0 0 4px 0;
+    }
+    .main-univ-sub {
+      font-size: 1.1em;
+      color: #393e46;
+      margin: 0 0 2px 0;
+    }
+    .main-school {
+      font-size: 1em;
+      color: #e85d04;
+      margin: 0;
+    }
+    .main-course {
+      color: #e85d04;
+      font-size: 2.2em;
+      font-weight: bold;
+      margin: 18px 0 24px 0;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .main-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 0 0 24px 0;
+      background: #f7f8fa;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 8px 0 rgba(35,41,70,0.06);
+    }
+    .main-table th, .main-table td {
+      padding: 14px 18px;
+      text-align: center;
+      font-size: 1.08em;
+    }
+    .main-table th {
+      background: #232946;
+      color: #fff;
+      font-weight: bold;
+      border-bottom: 2px solid #eebbc3;
+    }
+    .main-table tr:nth-child(2) td {
+      background: #fff;
+      color: #232946;
+      font-weight: 500;
+    }
+    .main-img {
+      width: 100%;
+      max-width: 900px;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px 0 rgba(35,41,70,0.08);
+      margin-top: 24px;
+    }
   </style>
+<script>
+// Section IDs in order
+const sectionIds = [
+  'main-page',
+  'Definition-of-Data:',
+  'Data-Types',
+  'Traditional-Dimensions-of-Big-Data-(3-Vs)',
+  'Extended-dimensions-(up-to-7–10-vs)',
+  'Data-lifecycle'
+];
+
+function showSection(idx) {
+  sectionIds.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.toggle('visible-section', i === idx);
+      el.classList.toggle('hidden-section', i !== idx);
+    }
+  });
+  // Set active button
+  document.querySelectorAll('.sidebar button').forEach((btn, i) => {
+    btn.classList.toggle('active', i === idx);
+  });
+}
+window.addEventListener('DOMContentLoaded', function() {
+  showSection(0);
+});
+</script>
+<body>
+<div class="container">
+  <nav class="sidebar">
+    <h2>Navigation</h2>
+    <button class="active" onclick="showSection(0)">Main Page</button>
+    <button onclick="showSection(1)">Definition of Data</button>
+    <button onclick="showSection(2)">Data Types</button>
+    <button onclick="showSection(3)">3 Vs</button>
+    <button onclick="showSection(4)">Extended Vs</button>
+    <button onclick="showSection(5)">Data lifecycle</button>
+  </nav>
+  <div class="main-content">
+    <div id="main-page" class="visible-section">
+      <div class="main-card">
+        <div class="main-card-header">
+          <img src="https://duk.ac.in/wp-content/uploads/2021/03/logo_transparent_bg_caption.png" alt="DUK Logo" class="main-logo">
+          <div class="main-title-group">
+            <h2 class="main-univ">Kerala University of Digital Sciences, Innovation and Technology</h2>
+            <h3 class="main-univ-sub">(Digital University Kerala, DUK)</h3>
+            <h4 class="main-school">School of Digital Sciences</h4>
+          </div>
+        </div>
+        <h1 class="main-course">Big Data Technologies and Cloud Computing</h1>
+        <table class="main-table">
+          <tbody>
+            <tr>
+              <th>Course code</th>
+              <th>Title of the course</th>
+              <th>Credits</th>
+              <th>Level</th>
+              <th>Lecture-Lab-Seminar-Project</th>
+            </tr>
+            <tr>
+              <td><span lang="EN-US">M5221365</span></td>
+              <td>Big Data Technologies and Cloud Computing</td>
+              <td>3</td>
+              <td>500</td>
+              <td>1-1-0-1</td>
+            </tr>
+          </tbody>
+        </table>
+        <img src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/class_details.png?raw=true" alt="Class Details" class="main-img">
+      </div>
+    </div>
+    <!-- The rest of the content will be wrapped in sections for toggling -->
+    <div id="Definition-of-Data:" class="hidden-section">
+      <div class="main-card">
+        <h2 class="main-course" style="margin-bottom: 18px;">Definition of Data</h2>
+        <p style="font-size:1.13em; color:#232946; margin-bottom: 22px;">In the context of data science, <strong>data</strong> refers to raw, unorganized facts, figures, or information that are collected and processed for analysis. Data can exist in various forms and structures, each requiring different methods and tools for storage, processing, and analysis. Understanding the nature of data is fundamental to effectively working with it.</p>
+        <div style="margin-bottom: 18px;">
+          <h3 id="Structured-Data" style="color:#ffbe0b; font-size:1.18em; margin-top:0;">Structured Data<a class="anchor-link" href="#Structured-Data">¶</a></h3>
+          <p><strong>Structured data</strong> is highly organized and follows a fixed schema or model. It is typically stored in tabular formats with rows and columns, where each column represents a specific attribute and each row represents a record. This rigid structure makes it easy to store, query, and analyze using traditional methods.</p>
+          <div style="display:flex; justify-content:center; margin-bottom:12px;">
+            <img alt="Structured Data" src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/Structured_Data.png?raw=true" style="width:500px; max-width:100%; border-radius:12px; box-shadow:0 2px 12px 0 rgba(35,41,70,0.10);">
+          </div>
+          <p><strong>Key Features:</strong></p>
+          <ul>
+            <li>Follows a predefined schema.</li>
+            <li>Organized in tables with rows and columns.</li>
+            <li>Easy to search and analyze using SQL and other traditional tools.</li>
+            <li>Requires less storage space compared to other types.</li>
+          </ul>
+          <p><strong>Examples:</strong></p>
+          <ul>
+            <li><strong>Relational Databases:</strong> Data stored in tables with defined relationships between them (e.g., customer information, sales records).</li>
+            <li><strong>Spreadsheets:</strong> Data organized in rows and columns within applications like Microsoft Excel or Google Sheets.</li>
+            <li><strong>CSV files:</strong> Data stored in plain text format where values are separated by commas, often representing tabular data.</li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="Semi-Structured-Data" style="color:#ffbe0b; font-size:1.18em; margin-top:0;">Semi-Structured Data<a class="anchor-link" href="#Semi-Structured-Data">¶</a></h3>
+          <p><strong>Semi-structured data</strong> has some organizational properties but does not conform to a strict, fixed schema like structured data. It contains tags or markers to separate and identify data elements, allowing for hierarchical relationships. While it doesn't fit into a relational database, its organizational features make it more manageable than unstructured data.</p>
+          <div style="display:flex; justify-content:center; margin-bottom:12px;">
+            <img alt="Semi-Structured Data" src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/Semi-Structured_Data.png?raw=true" style="width:500px; max-width:100%; border-radius:12px; box-shadow:0 2px 12px 0 rgba(35,41,70,0.10);">
+          </div>
+          <p><strong>Key Features:</strong></p>
+          <ul>
+            <li>Contains tags or markers to delineate elements.</li>
+            <li>Does not follow a rigid schema.</li>
+            <li>Supports hierarchical structures.</li>
+            <li>More flexible than structured data.</li>
+          </ul>
+          <p><strong>Examples:</strong></p>
+          <ul>
+            <li><strong>JSON (JavaScript Object Notation):</strong> A lightweight data interchange format that uses key-value pairs and arrays to represent data. Widely used in web applications and APIs.</li>
+            <li><strong>XML (eXtensible Markup Language):</strong> A markup language that uses tags to define elements and their attributes, commonly used for data exchange and document structuring.</li>
+            <li><strong>NoSQL Databases (some types):</strong> Databases like document databases (e.g., MongoDB) often store data in semi-structured formats like JSON.</li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="Unstructured-Data" style="color:#ffbe0b; font-size:1.18em; margin-top:0;">Unstructured Data<a class="anchor-link" href="#Unstructured-Data">¶</a></h3>
+          <p><strong>Unstructured data</strong> lacks a predefined schema or organization. It exists in its raw form and does not fit neatly into traditional rows and columns. Analyzing unstructured data often requires more advanced techniques like natural language processing (NLP), machine learning, and data mining.</p>
+          <div style="display:flex; justify-content:center; margin-bottom:12px;">
+            <img alt="Unstructured Data" src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/Unstructured_Data.png?raw=true" style="width:500px; max-width:100%; border-radius:12px; box-shadow:0 2px 12px 0 rgba(35,41,70,0.10);">
+          </div>
+          <p><strong>Key Features:</strong></p>
+          <ul>
+            <li>No predefined schema or structure.</li>
+            <li>Difficult to search and analyze using traditional methods.</li>
+            <li>Requires more sophisticated tools and techniques for processing.</li>
+            <li>Represents the vast majority of data generated today.</li>
+          </ul>
+          <p><strong>Examples:</strong></p>
+          <ul>
+            <li><strong>Text Documents:</strong> Emails, articles, social media posts, books, reports.</li>
+            <li><strong>Images:</strong> Photographs, scans, graphics.</li>
+            <li><strong>Audio Files:</strong> Recordings, music, podcasts.</li>
+            <li><strong>Video Files:</strong> Movies, surveillance footage, video clips.</li>
+            <li><strong>Sensor Data:</strong> Raw data streams from sensors before processing and structuring.</li>
+          </ul>
+        </div>
+        <div style="display:flex; justify-content:center; margin-bottom:12px;">
+          <img alt="Data Formats Example" src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/data_formats_example.png?raw=true" style="width:1000px; max-width:100%; border-radius:12px; box-shadow:0 2px 12px 0 rgba(35,41,70,0.10);">
+        </div>
+      </div>
+    </div>
+    <div id="Data-Types" class="hidden-section">
+      <div class="main-card">
+        <h2 class="main-course" style="margin-bottom: 18px;">Data Types</h2>
+        <p style="font-size:1.13em; color:#232946; margin-bottom: 22px;">Understanding different <strong>data types</strong> is crucial in data analysis and machine learning. The type of data dictates the appropriate methods for storage, cleaning, analysis, and visualization. Data can be broadly categorized into several types based on its nature and properties.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: center; margin-bottom: 28px;">
+          <img src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/data_types_and_examples.png?raw=true" alt="Data Types and Examples" style="max-width: 480px; width:100%; border-radius:14px; box-shadow:0 2px 12px 0 rgba(35,41,70,0.08);">
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="Numerical-Data" style="color:#8338ec; font-size:1.18em; margin-top:0;">Numerical Data<a class="anchor-link" href="#Numerical-Data">¶</a></h3>
+          <p><strong>Numerical data</strong> represents quantitative values, meaning they can be measured and expressed as numbers. Numerical data can be further divided into two sub-types:</p>
+          <ul>
+            <li><strong>Discrete Numerical Data:</strong> Represents countable items or values that can only take specific, distinct values. There are a finite or countable number of possible values.
+              <ul>
+                <li><strong>Examples:</strong>
+                  <ul>
+                    <li>Number of students in a class (you can't have half a student).</li>
+                    <li>Number of cars passing a point in an hour.</li>
+                    <li>The score on a die roll (1, 2, 3, 4, 5, or 6).</li>
+                    <li>Number of defects in a manufactured product.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Continuous Numerical Data:</strong> Represents measurements that can take any value within a given range. The values are not restricted to specific steps or integers.
+              <ul>
+                <li><strong>Examples:</strong>
+                  <ul>
+                    <li>Height of a person (can be 1.75 meters, 1.755 meters, etc.).</li>
+                    <li>Temperature of a room (can be 22.1°C, 22.15°C, etc.).</li>
+                    <li>Weight of an object.</li>
+                    <li>Time taken to complete a task.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="Categorical-Data" style="color:#8338ec; font-size:1.18em; margin-top:0;">Categorical Data<a class="anchor-link" href="#Categorical-Data">¶</a></h3>
+          <p><strong>Categorical data</strong> represents qualitative values or labels. These values belong to a finite set of categories or groups. Categorical data can be further classified into two sub-types:</p>
+          <ul>
+            <li><strong>Nominal Categorical Data:</strong> Represents categories that do not have a natural order or ranking. The categories are simply names or labels.
+              <ul>
+                <li><strong>Examples:</strong>
+                  <ul>
+                    <li>Colors (Red, Blue, Green).</li>
+                    <li>Marital Status (Single, Married, Divorced).</li>
+                    <li>Blood Type (A, B, AB, O).</li>
+                    <li>Gender (Male, Female, Non-binary).</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Ordinal Categorical Data:</strong> Represents categories that have a natural order or ranking. The difference between categories is not necessarily uniform or measurable, but the order is meaningful.
+              <ul>
+                <li><strong>Examples:</strong>
+                  <ul>
+                    <li>Educational Level (High School, Bachelor's, Master's, PhD).</li>
+                    <li>Customer Satisfaction Rating (Very Dissatisfied, Dissatisfied, Neutral, Satisfied, Very Satisfied).</li>
+                    <li>Size of Clothing (Small, Medium, Large).</li>
+                    <li>Military Ranks.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="Time-Series-Data" style="color:#8338ec; font-size:1.18em; margin-top:0;">Time-Series Data<a class="anchor-link" href="#Time-Series-Data">¶</a></h3>
+          <p><strong>Time-series data</strong> is a sequence of data points collected over a period of time, typically at equally spaced intervals. The order of the data points is crucial, as it often reveals trends, seasonality, and other temporal patterns.</p>
+          <ul>
+            <li><strong>Key Characteristics:</strong>
+              <ul>
+                <li>Ordered by time.</li>
+                <li>Data points collected at specific time intervals.</li>
+                <li>Often exhibits trends, seasonality, and cyclical patterns.</li>
+              </ul>
+            </li>
+            <li><strong>Examples:</strong>
+              <ul>
+                <li>Stock prices recorded daily.</li>
+                <li>Hourly temperature readings.</li>
+                <li>Monthly sales figures.</li>
+                <li>Website traffic recorded minute by minute.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="Spatial-Data" style="color:#8338ec; font-size:1.18em; margin-top:0;">Spatial Data<a class="anchor-link" href="#Spatial-Data">¶</a></h3>
+          <p><strong>Spatial data</strong>, also known as geospatial data, represents information that has a geographical or locational component. It describes the position, shape, and relationships of features on the Earth's surface or in space.</p>
+          <ul>
+            <li><strong>Relevance:</strong> Used in Geographic Information Systems (GIS), mapping, navigation, urban planning, environmental studies, and more.</li>
+            <li><strong>Examples:</strong>
+              <ul>
+                <li>Locations of cities on a map (points).</li>
+                <li>Boundaries of countries or states (polygons).</li>
+                <li>Road networks (lines).</li>
+                <li>Satellite imagery.</li>
+                <li>GPS coordinates.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="Multimedia-Data" style="color:#8338ec; font-size:1.18em; margin-top:0;">Multimedia Data<a class="anchor-link" href="#Multimedia-Data">¶</a></h3>
+          <p><strong>Multimedia data</strong> encompasses various forms of data, including text, images, audio, and video. It is often unstructured or semi-structured and requires specialized techniques for processing and analysis.</p>
+          <ul>
+            <li><strong>Various Forms:</strong>
+              <ul>
+                <li><strong>Images:</strong> Photos, illustrations, scans.</li>
+                <li><strong>Audio:</strong> Music, speech, sound effects.</li>
+                <li><strong>Video:</strong> Movies, recordings, animations.</li>
+                <li><strong>Text:</strong> Documents, captions, transcripts (when combined with other media).</li>
+              </ul>
+            </li>
+            <li><strong>Examples:</strong>
+              <ul>
+                <li>A video file containing both visual and audio information.</li>
+                <li>An image with embedded text captions.</li>
+                <li>A presentation with text, images, and audio clips.</li>
+                <li>Social media posts containing text, images, and videos.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <p style="margin-top: 18px; font-size:1.08em; color:#232946;">Understanding these different data types is fundamental for selecting appropriate data collection methods, choosing the right analytical tools and techniques, and effectively interpreting the results of data analysis.</p>
+      </div>
+    </div>
+    <div id="Traditional-Dimensions-of-Big-Data-(3-Vs)" class="hidden-section">
+      <div class="main-card">
+        <h2 class="main-course" style="margin-bottom: 18px;">Traditional Dimensions of Big Data (3 Vs)</h2>
+        <p style="font-size:1.13em; color:#232946; margin-bottom: 22px;">The concept of <strong>"Big Data"</strong> is often characterized by several key dimensions that highlight its complexity and the challenges it presents compared to traditional data. The most commonly cited dimensions are the <strong>"3 Vs"</strong>: Volume, Velocity, and Variety. These dimensions were first introduced by Gartner analyst Doug Laney in 2001.</p>
+        <div style="margin-bottom: 18px;">
+          <h3 id="Volume" style="color:#ffbe0b; font-size:1.18em; margin-top:0;">Volume<a class="anchor-link" href="#Volume">¶</a></h3>
+          <p><strong>Volume</strong> refers to the sheer scale of data being generated, stored, and processed. Big Data involves datasets that are so large they cannot be managed or analyzed effectively using traditional database and data processing tools.</p>
+          <ul>
+            <li><strong>Explanation:</strong> As data sources proliferate (social media, sensors, transactions, etc.), the amount of data grows exponentially, reaching petabytes, exabytes, or even zettabytes. This massive scale requires distributed storage systems and parallel processing frameworks.</li>
+            <li><strong>Importance/Challenge:</strong> Handling such vast quantities of data poses significant challenges in terms of storage costs, processing power, and the time required for analysis. It necessitates scalable infrastructure and efficient data management techniques.</li>
+            <li><strong>Example:</strong> A social media platform storing billions of user posts, comments, and interactions daily. A large hadron collider generating petabytes of experimental data every second.</li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="Velocity" style="color:#ffbe0b; font-size:1.18em; margin-top:0;">Velocity<a class="anchor-link" href="#Velocity">¶</a></h3>
+          <p><strong>Velocity</strong> refers to the speed at which data is generated, collected, and processed. In the context of Big Data, data is often streaming in real-time or near real-time, requiring rapid processing and analysis to extract timely insights.</p>
+          <ul>
+            <li><strong>Explanation:</strong> Data flows in at unprecedented speeds, often from sources like sensors, financial markets, and online interactions. The value of this data often diminishes quickly, making immediate processing essential for timely decision-making.</li>
+            <li><strong>Importance/Challenge:</strong> Dealing with high-velocity data requires real-time data processing capabilities, stream analytics, and low-latency systems. Traditional batch processing methods are often inadequate.</li>
+            <li><strong>Example:</strong> Real-time stock trading data, where decisions need to be made in milliseconds. Sensor data from autonomous vehicles being processed instantly to navigate and avoid obstacles.</li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="Variety" style="color:#ffbe0b; font-size:1.18em; margin-top:0;">Variety<a class="anchor-link" href="#Variety">¶</a></h3>
+          <p><strong>Variety</strong> refers to the different forms and sources of data. Big Data encompasses structured data (like databases), semi-structured data (like JSON or XML), and unstructured data (like text, images, audio, and video).</p>
+          <ul>
+            <li><strong>Explanation:</strong> Data no longer fits neatly into traditional, structured formats. It comes from diverse sources and in disparate formats, making it challenging to integrate, clean, and analyze using traditional methods designed for structured data.</li>
+            <li><strong>Importance/Challenge:</strong> Integrating and analyzing data from such a wide range of formats and sources requires flexible data models, advanced data integration techniques, and analytical tools capable of handling different data types.</li>
+            <li><strong>Example:</strong> A company analyzing customer feedback from structured sales databases, semi-structured web server logs, and unstructured social media posts and customer service call transcripts.</li>
+          </ul>
+        </div>
+        <div style="display: flex; justify-content: center; margin-top: 32px;">
+          <img src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/3Vs.png?raw=true" alt="3 Vs of Big Data" style="max-width: 600px; width:100%; border-radius:14px; box-shadow:0 2px 12px 0 rgba(35,41,70,0.10);">
+        </div>
+      </div>
+
+    </div>
+
+    <div id="Extended-dimensions-(up-to-7–10-vs)" class="hidden-section">
+      <div class="main-card">
+        <h2 class="main-course" style="margin-bottom: 18px;">Extended dimensions (up to 7–10 Vs)</h2>
+        <div style="padding: 28px 32px 18px 32px;">
+          <p style="font-size:1.15em; color:#232946; margin-bottom: 22px;">Beyond the traditional <strong>"3 Vs"</strong> (Volume, Velocity, Variety), several other dimensions have been proposed to provide a more comprehensive understanding of the complexities and challenges associated with Big Data. These extended 'Vs' highlight aspects related to the quality, trustworthiness, value, and usability of the data.</p>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 28px; justify-content: center;">
+            <div style="flex: 1 1 320px; min-width: 320px; max-width: 420px; background: #f6f7fb; border-radius: 12px; box-shadow: 0 2px 8px 0 rgba(35,41,70,0.07); padding: 20px 22px 16px 22px; margin-bottom: 12px;">
+              <h3 id="Veracity" style="color:#e85d04; font-size:1.25em; margin-top:0;">Veracity<a class="anchor-link" href="#Veracity">¶</a></h3>
+              <p><strong>Veracity</strong> refers to the truthfulness, accuracy, and trustworthiness of the data. Big Data often comes from diverse sources, some of which may not be reliable, leading to uncertainty and inaccuracies.</p>
+              <ul style="margin-bottom: 0;">
+                <li><strong>Explanation:</strong> Data can be noisy, inconsistent, biased, or subject to manipulation. Ensuring the quality and reliability of data is critical for deriving meaningful and actionable insights. Low veracity can lead to flawed analysis and poor decision-making.</li>
+                <li><strong>Significance/Challenge:</strong> Dealing with data uncertainty and ensuring data quality requires robust data cleaning, validation, and governance processes. It's essential to understand the source and potential biases of the data.</li>
+                <li><strong>Example:</strong> Analyzing social media sentiment where posts might contain sarcasm, slang, or fake information, making it difficult to accurately gauge public opinion. Sensor data from faulty equipment providing inaccurate readings.</li>
+              </ul>
+            </div>
+            <div style="flex: 1 1 320px; min-width: 320px; max-width: 420px; background: #f6f7fb; border-radius: 12px; box-shadow: 0 2px 8px 0 rgba(35,41,70,0.07); padding: 20px 22px 16px 22px; margin-bottom: 12px;">
+              <h3 id="Value" style="color:#e85d04; font-size:1.25em; margin-top:0;">Value<a class="anchor-link" href="#Value">¶</a></h3>
+              <p><strong>Value</strong> refers to the potential to transform Big Data into meaningful and useful insights that lead to business value, competitive advantage, or societal benefit. Simply having large amounts of data is not enough; the data must be processed and analyzed to extract value.</p>
+              <ul style="margin-bottom: 0;">
+                <li><strong>Explanation:</strong> The ultimate goal of collecting and analyzing Big Data is to generate value. This involves identifying relevant data, applying appropriate analytical techniques, and translating the findings into actionable strategies or outcomes.</li>
+                <li><strong>Significance/Challenge:</strong> Extracting value from Big Data requires clear objectives, skilled data scientists, appropriate tools, and the ability to integrate insights into decision-making processes. Not all data is equally valuable, and identifying the truly valuable data is a key challenge.</li>
+                <li><strong>Example:</strong> A retail company analyzing customer purchase history, website clicks, and loyalty program data to personalize product recommendations and increase sales. A healthcare provider using patient data to predict disease outbreaks and allocate resources effectively.</li>
+              </ul>
+            </div>
+            <div style="flex: 1 1 320px; min-width: 320px; max-width: 420px; background: #f6f7fb; border-radius: 12px; box-shadow: 0 2px 8px 0 rgba(35,41,70,0.07); padding: 20px 22px 16px 22px; margin-bottom: 12px;">
+              <h3 id="Variability" style="color:#e85d04; font-size:1.25em; margin-top:0;">Variability<a class="anchor-link" href="#Variability">¶</a></h3>
+              <p><strong>Variability</strong> refers to the inconsistency in the data flow rate and the changes in the structure of the data over time. This is distinct from Variety, which refers to the different types of data formats. Variability deals with the dynamic nature of the data itself.</p>
+              <ul style="margin-bottom: 0;">
+                <li><strong>Explanation:</strong> The speed and format of incoming data streams can fluctuate significantly. For instance, data from a popular event might spike, while data from a less active source might trickle in slowly. The meaning or context of data points can also change.</li>
+                <li><strong>Significance/Challenge:</strong> Managing variability requires flexible processing systems that can adapt to changing data rates and structures. It poses challenges for maintaining consistent data pipelines and ensuring real-time processing capabilities.</li>
+                <li><strong>Example:</strong> Website traffic data showing huge spikes during a major online sale event versus normal traffic levels. Sensor data from a manufacturing plant where data streams might vary in frequency depending on the production cycle.</li>
+              </ul>
+            </div>
+            <div style="flex: 1 1 320px; min-width: 320px; max-width: 420px; background: #f6f7fb; border-radius: 12px; box-shadow: 0 2px 8px 0 rgba(35,41,70,0.07); padding: 20px 22px 16px 22px; margin-bottom: 12px;">
+              <h3 id="Visualization" style="color:#e85d04; font-size:1.25em; margin-top:0;">Visualization<a class="anchor-link" href="#Visualization">¶</a></h3>
+              <p><strong>Visualization</strong> refers to the ability to effectively present Big Data and the insights derived from it in a clear, understandable, and interactive graphical format. Given the complexity and scale of Big Data, traditional visualization methods are often insufficient.</p>
+              <ul style="margin-bottom: 0;">
+                <li><strong>Explanation:</strong> Visualizing Big Data helps in exploring patterns, identifying trends, and communicating findings to stakeholders who may not have a technical background. Effective visualization tools are needed to handle the volume and complexity of the data.</li>
+                <li><strong>Significance/Challenge:</strong> Creating meaningful and scalable visualizations for massive datasets is challenging. It requires specialized tools and techniques to avoid clutter and effectively convey information without overwhelming the viewer.</li>
+                <li><strong>Example:</strong> Using interactive dashboards to display real-time performance metrics from various business units. Creating network graphs to visualize connections in social media data.</li>
+              </ul>
+            </div>
+            <div style="flex: 1 1 320px; min-width: 320px; max-width: 420px; background: #f6f7fb; border-radius: 12px; box-shadow: 0 2px 8px 0 rgba(35,41,70,0.07); padding: 20px 22px 16px 22px; margin-bottom: 12px;">
+              <h3 id="Validity" style="color:#e85d04; font-size:1.25em; margin-top:0;">Validity<a class="anchor-link" href="#Validity">¶</a></h3>
+              <p><strong>Validity</strong> refers to the correctness and accuracy of the data for its intended use. While Veracity is about the truthfulness of the data itself, Validity is about whether the data is appropriate and relevant for a specific analytical task.</p>
+              <ul style="margin-bottom: 0;">
+                <li><strong>Explanation:</strong> Data might be accurate in its raw form (high veracity) but might not be valid for a particular analysis if it's outdated, incomplete for the required scope, or collected under different conditions than the analysis assumes.</li>
+                <li><strong>Significance/Challenge:</strong> Ensuring data validity requires a deep understanding of the analytical problem, the data sources, and potential limitations of the data. It involves assessing the data's relevance and suitability for the specific question being asked.</li>
+                <li><strong>Example:</strong> Using historical sales data from a period before a major product redesign to predict current sales trends – the data might be accurate (high veracity) but not valid for predicting current trends due to the change.</li>
+              </ul>
+            </div>
+            <div style="flex: 1 1 320px; min-width: 320px; max-width: 420px; background: #f6f7fb; border-radius: 12px; box-shadow: 0 2px 8px 0 rgba(35,41,70,0.07); padding: 20px 22px 16px 22px; margin-bottom: 12px;">
+              <h3 id="Vulnerability" style="color:#e85d04; font-size:1.25em; margin-top:0;">Vulnerability<a class="anchor-link" href="#Vulnerability">¶</a></h3>
+              <p><strong>Vulnerability</strong> refers to the security risks associated with storing, processing, and analyzing large and diverse datasets, especially those containing sensitive information. The sheer volume and variety of Big Data increase the potential attack surface.</p>
+              <ul style="margin-bottom: 0;">
+                <li><strong>Explanation:</strong> Big Data systems can be targets for cyberattacks, data breaches, and privacy violations. Protecting this data is paramount, especially in sectors like healthcare, finance, and government.</li>
+                <li><strong>Significance/Challenge:</strong> Securing Big Data requires robust security measures, including encryption, access control, anomaly detection, and compliance with data privacy regulations (like GDPR, CCPA). The distributed nature of many Big Data systems adds complexity to security management.</li>
+                <li><strong>Example:</strong> A healthcare organization storing vast amounts of patient health records needing to implement stringent security protocols to prevent breaches and comply with HIPAA regulations.</li>
+              </ul>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: center; margin-top: 32px;">
+            <img src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/7Vs.png?raw=true" alt="7 Vs of Big Data" style="max-width: 700px; width:100%; border-radius:14px; box-shadow:0 2px 12px 0 rgba(35,41,70,0.10);">
+          </div>
+          <p style="margin-top: 18px; font-size:1.08em; color:#232946;">These extended dimensions, along with the traditional 3 Vs, provide a more complete picture of the characteristics and challenges of working with Big Data, highlighting the need for sophisticated approaches to data management, processing, analysis, and governance.</p>
+        </div>
+      </div>
+
+    </div>
+    <div id="Data-lifecycle" class="hidden-section">
+      <div class="main-card">
+        <h2 class="main-course" style="margin-bottom: 18px;">Data Lifecycle</h2>
+        <p style="font-size:1.13em; color:#232946; margin-bottom: 22px;">The <strong>data lifecycle</strong> describes the sequence of stages that data goes through from its initial creation or collection to its eventual deletion or archival. Managing data effectively at each stage is crucial for ensuring data quality, accessibility, security, and compliance, as well as for maximizing the value derived from the data.</p>
+        <p style="font-size:1.08em; color:#232946; margin-bottom: 18px;">Here are the typical stages of the data lifecycle:</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: center; margin-bottom: 28px;">
+          <img src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/data_lifecycle.png?raw=true" alt="Data Lifecycle" style="max-width: 480px; width:100%; border-radius:14px; box-shadow:0 2px 12px 0 rgba(35,41,70,0.08);">
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="1.-Data-Generation" style="color:#e85d04; font-size:1.18em; margin-top:0;">1. Data Generation</h3>
+          <p>This is the stage where data is created or first collected. Data can be generated from a vast array of sources, both internal and external.</p>
+          <ul>
+            <li><strong>What happens:</strong> Data is born. This can involve recording transactions, capturing sensor readings, receiving form submissions, logging user activity, digitizing documents, or collecting data from external APIs and sources.</li>
+            <li><strong>Purpose/Key Activities:</strong> To create the initial raw data that will be used in subsequent stages. Activities include data entry, data capture, data acquisition, and data scraping.</li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="2.-Data-Storage" style="color:#e85d04; font-size:1.18em; margin-top:0;">2. Data Storage</h3>
+          <p>Once data is generated, it needs to be stored in a secure and accessible manner. The choice of storage depends on the data type, volume, velocity, and access requirements.</p>
+          <ul>
+            <li><strong>What happens:</strong> Raw or initially processed data is saved to various storage mediums. This can range from simple file systems and databases to data warehouses, data lakes, or cloud storage solutions.</li>
+            <li><strong>Purpose/Key Activities:</strong> To preserve the data for future use and processing. Activities include data ingestion, backup, security implementation, and defining storage schemas or structures.</li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="3.-Data-Processing" style="color:#e85d04; font-size:1.18em; margin-top:0;">3. Data Processing</h3>
+          <p>In this stage, the raw data is transformed, cleaned, and organized into a format suitable for analysis. This often involves various data manipulation and transformation techniques.</p>
+          <ul>
+            <li><strong>What happens:</strong> Data is cleaned (handling missing values, correcting errors, removing duplicates), transformed (aggregating, normalizing, restructuring), and integrated from multiple sources. This stage prepares the data for meaningful analysis.</li>
+            <li><strong>Purpose/Key Activities:</strong> To refine and prepare the data for analysis. Activities include data cleaning, transformation, integration, validation, and enrichment.</li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="4.-Data-Analysis" style="color:#e85d04; font-size:1.18em; margin-top:0;">4. Data Analysis</h3>
+          <p>This is where insights are extracted from the processed data. Various analytical techniques are applied to identify patterns, trends, correlations, and anomalies.</p>
+          <ul>
+            <li><strong>What happens:</strong> Data scientists and analysts use statistical methods, machine learning algorithms, data mining techniques, and other analytical tools to explore the data and answer specific questions or test hypotheses.</li>
+            <li><strong>Purpose/Key Activities:</strong> To discover insights, support decision-making, build models, and derive knowledge from the data. Activities include exploratory data analysis, statistical modeling, predictive modeling, and pattern recognition.</li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="5.-Data-Visualization" style="color:#e85d04; font-size:1.18em; margin-top:0;">5. Data Visualization</h3>
+          <p>Once insights are gained from the analysis, data visualization is used to present these findings in a clear, understandable, and compelling graphical format.</p>
+          <ul>
+            <li><strong>What happens:</strong> Analytical results are translated into charts, graphs, dashboards, maps, and other visual representations to communicate findings to stakeholders.</li>
+            <li><strong>Purpose/Key Activities:</strong> To effectively communicate complex data insights, make data more accessible and understandable, and facilitate data-driven decision-making. Activities include creating reports, dashboards, and interactive visualizations.</li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 id="6.-Archiving/Deletion" style="color:#e85d04; font-size:1.18em; margin-top:0;">6. Archiving/Deletion</h3>
+          <p>The final stage involves managing data that is no longer actively used. Depending on regulations, policies, and ongoing needs, data may be archived for future reference or legally compliant deletion.</p>
+          <ul>
+            <li><strong>What happens:</strong> Data that is no longer needed for daily operations or active analysis but must be retained for compliance or historical purposes is moved to long-term, less accessible storage (archiving). Data that is no longer required and has no legal or business reason to be kept is permanently removed (deletion).</li>
+            <li><strong>Purpose/Key Activities:</strong> To manage data storage costs, comply with data retention policies and regulations, and protect privacy by securely disposing of sensitive data when no longer needed. Activities include data retention policy implementation, data backup for archives, and secure data erasure.</li>
+          </ul>
+        </div>
+        <p style="font-size:1.08em; color:#232946;">These stages form a continuous cycle, where insights from analysis might lead to the generation of new data or modifications in how data is collected and processed. Effective management throughout this lifecycle is key to leveraging data as a valuable asset.</p>
+      </div>
+    </div>
+  </div>
+</div>
 <style type="text/css">
 /*-----------------------------------------------------------------------------
 | Copyright (c) Jupyter Development Team.
@@ -7509,355 +8111,6 @@ a.anchor-link {
   }
 </style>
 <!-- End of mermaid configuration --></head>
-<body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
-<main>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Definition-of-Data:"><strong>Definition of Data</strong>:<a class="anchor-link" href="#Definition-of-Data:">¶</a></h2>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>In the context of data science, <strong>data</strong> refers to raw, unorganized facts, figures, or information that are collected and processed for analysis. Data can exist in various forms and structures, each requiring different methods and tools for storage, processing, and analysis. Understanding the nature of data is fundamental to effectively working with it.</p>
-<h3 id="Structured-Data">Structured Data<a class="anchor-link" href="#Structured-Data">¶</a></h3><p><strong>Structured data</strong> is highly organized and follows a fixed schema or model. It is typically stored in tabular formats with rows and columns, where each column represents a specific attribute and each row represents a record. This rigid structure makes it easy to store, query, and analyze using traditional methods.</p>
-<p><img align="right" alt="No description has been provided for this image" src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/Structured_Data.png?raw=true" width="500"/></p>
-<p><strong>Key Features:</strong></p>
-<ul>
-<li>Follows a predefined schema.</li>
-<li>Organized in tables with rows and columns.</li>
-<li>Easy to search and analyze using SQL and other traditional tools.</li>
-<li>Requires less storage space compared to other types.</li>
-</ul>
-<p><strong>Examples:</strong></p>
-<ul>
-<li><strong>Relational Databases:</strong> Data stored in tables with defined relationships between them (e.g., customer information, sales records).</li>
-<li><strong>Spreadsheets:</strong> Data organized in rows and columns within applications like Microsoft Excel or Google Sheets.</li>
-<li><strong>CSV files:</strong> Data stored in plain text format where values are separated by commas, often representing tabular data.</li>
-</ul>
-<h3 id="Semi-Structured-Data">Semi-Structured Data<a class="anchor-link" href="#Semi-Structured-Data">¶</a></h3><p><strong>Semi-structured data</strong> has some organizational properties but does not conform to a strict, fixed schema like structured data. It contains tags or markers to separate and identify data elements, allowing for hierarchical relationships. While it doesn't fit into a relational database, its organizational features make it more manageable than unstructured data.</p>
-<p><img align="right" alt="No description has been provided for this image" src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/Semi-Structured_Data.png?raw=true" width="500"/></p>
-<p><strong>Key Features:</strong></p>
-<ul>
-<li>Contains tags or markers to delineate elements.</li>
-<li>Does not follow a rigid schema.</li>
-<li>Supports hierarchical structures.</li>
-<li>More flexible than structured data.</li>
-</ul>
-<p><strong>Examples:</strong></p>
-<ul>
-<li><strong>JSON (JavaScript Object Notation):</strong> A lightweight data interchange format that uses key-value pairs and arrays to represent data. Widely used in web applications and APIs.</li>
-<li><strong>XML (eXtensible Markup Language):</strong> A markup language that uses tags to define elements and their attributes, commonly used for data exchange and document structuring.</li>
-<li><strong>NoSQL Databases (some types):</strong> Databases like document databases (e.g., MongoDB) often store data in semi-structured formats like JSON.</li>
-</ul>
-<h3 id="Unstructured-Data">Unstructured Data<a class="anchor-link" href="#Unstructured-Data">¶</a></h3><p><strong>Unstructured data</strong> lacks a predefined schema or organization. It exists in its raw form and does not fit neatly into traditional rows and columns. Analyzing unstructured data often requires more advanced techniques like natural language processing (NLP), machine learning, and data mining.</p>
-<p><img align="right" alt="No description has been provided for this image" src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/Unstructured_Data.png?raw=true" width="500"/></p>
-<p><strong>Key Features:</strong></p>
-<ul>
-<li>No predefined schema or structure.</li>
-<li>Difficult to search and analyze using traditional methods.</li>
-<li>Requires more sophisticated tools and techniques for processing.</li>
-<li>Represents the vast majority of data generated today.</li>
-</ul>
-<p><strong>Examples:</strong></p>
-<ul>
-<li><strong>Text Documents:</strong> Emails, articles, social media posts, books, reports.</li>
-<li><strong>Images:</strong> Photographs, scans, graphics.</li>
-<li><strong>Audio Files:</strong> Recordings, music, podcasts.</li>
-<li><strong>Video Files:</strong> Movies, surveillance footage, video clips.</li>
-<li><strong>Sensor Data:</strong> Raw data streams from sensors before processing and structuring.</li>
-</ul>
-<p><img align="right" alt="No description has been provided for this image" src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/data_formats_example.png?raw=true" width="1000"/></p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Data-Types"><strong>Data Types</strong><a class="anchor-link" href="#Data-Types">¶</a></h2>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Understanding different <strong>data types</strong> is crucial in data analysis and machine learning. The type of data dictates the appropriate methods for storage, cleaning, analysis, and visualization. Data can be broadly categorized into several types based on its nature and properties.</p>
-<p><img align="right" alt="No description has been provided for this image" src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/data_types_and_examples.png?raw=true" width="600"/></p>
-<h3 id="Numerical-Data">Numerical Data<a class="anchor-link" href="#Numerical-Data">¶</a></h3><p><strong>Numerical data</strong> represents quantitative values, meaning they can be measured and expressed as numbers. Numerical data can be further divided into two sub-types:</p>
-<ul>
-<li><p><strong>Discrete Numerical Data:</strong> Represents countable items or values that can only take specific, distinct values. There are a finite or countable number of possible values.</p>
-<ul>
-<li><strong>Examples:</strong><ul>
-<li>Number of students in a class (you can't have half a student).</li>
-<li>Number of cars passing a point in an hour.</li>
-<li>The score on a die roll (1, 2, 3, 4, 5, or 6).</li>
-<li>Number of defects in a manufactured product.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Continuous Numerical Data:</strong> Represents measurements that can take any value within a given range. The values are not restricted to specific steps or integers.</p>
-<ul>
-<li><strong>Examples:</strong><ul>
-<li>Height of a person (can be 1.75 meters, 1.755 meters, etc.).</li>
-<li>Temperature of a room (can be 22.1°C, 22.15°C, etc.).</li>
-<li>Weight of an object.</li>
-<li>Time taken to complete a task.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Categorical-Data">Categorical Data<a class="anchor-link" href="#Categorical-Data">¶</a></h3><p><strong>Categorical data</strong> represents qualitative values or labels. These values belong to a finite set of categories or groups. Categorical data can be further classified into two sub-types:</p>
-<ul>
-<li><p><strong>Nominal Categorical Data:</strong> Represents categories that do not have a natural order or ranking. The categories are simply names or labels.</p>
-<ul>
-<li><strong>Examples:</strong><ul>
-<li>Colors (Red, Blue, Green).</li>
-<li>Marital Status (Single, Married, Divorced).</li>
-<li>Blood Type (A, B, AB, O).</li>
-<li>Gender (Male, Female, Non-binary).</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Ordinal Categorical Data:</strong> Represents categories that have a natural order or ranking. The difference between categories is not necessarily uniform or measurable, but the order is meaningful.</p>
-<ul>
-<li><strong>Examples:</strong><ul>
-<li>Educational Level (High School, Bachelor's, Master's, PhD).</li>
-<li>Customer Satisfaction Rating (Very Dissatisfied, Dissatisfied, Neutral, Satisfied, Very Satisfied).</li>
-<li>Size of Clothing (Small, Medium, Large).</li>
-<li>Military Ranks.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="Time-Series-Data">Time-Series Data<a class="anchor-link" href="#Time-Series-Data">¶</a></h3><p><strong>Time-series data</strong> is a sequence of data points collected over a period of time, typically at equally spaced intervals. The order of the data points is crucial, as it often reveals trends, seasonality, and other temporal patterns.</p>
-<ul>
-<li><p><strong>Key Characteristics:</strong></p>
-<ul>
-<li>Ordered by time.</li>
-<li>Data points collected at specific time intervals.</li>
-<li>Often exhibits trends, seasonality, and cyclical patterns.</li>
-</ul>
-</li>
-<li><p><strong>Examples:</strong></p>
-<ul>
-<li>Stock prices recorded daily.</li>
-<li>Hourly temperature readings.</li>
-<li>Monthly sales figures.</li>
-<li>Website traffic recorded minute by minute.</li>
-</ul>
-</li>
-</ul>
-<h3 id="Spatial-Data">Spatial Data<a class="anchor-link" href="#Spatial-Data">¶</a></h3><p><strong>Spatial data</strong>, also known as geospatial data, represents information that has a geographical or locational component. It describes the position, shape, and relationships of features on the Earth's surface or in space.</p>
-<ul>
-<li><p><strong>Relevance:</strong> Used in Geographic Information Systems (GIS), mapping, navigation, urban planning, environmental studies, and more.</p>
-</li>
-<li><p><strong>Examples:</strong></p>
-<ul>
-<li>Locations of cities on a map (points).</li>
-<li>Boundaries of countries or states (polygons).</li>
-<li>Road networks (lines).</li>
-<li>Satellite imagery.</li>
-<li>GPS coordinates.</li>
-</ul>
-</li>
-</ul>
-<h3 id="Multimedia-Data">Multimedia Data<a class="anchor-link" href="#Multimedia-Data">¶</a></h3><p><strong>Multimedia data</strong> encompasses various forms of data, including text, images, audio, and video. It is often unstructured or semi-structured and requires specialized techniques for processing and analysis.</p>
-<ul>
-<li><p><strong>Various Forms:</strong></p>
-<ul>
-<li><strong>Images:</strong> Photos, illustrations, scans.</li>
-<li><strong>Audio:</strong> Music, speech, sound effects.</li>
-<li><strong>Video:</strong> Movies, recordings, animations.</li>
-<li><strong>Text:</strong> Documents, captions, transcripts (when combined with other media).</li>
-</ul>
-</li>
-<li><p><strong>Examples:</strong></p>
-<ul>
-<li>A video file containing both visual and audio information.</li>
-<li>An image with embedded text captions.</li>
-<li>A presentation with text, images, and audio clips.</li>
-<li>Social media posts containing text, images, and videos.</li>
-</ul>
-</li>
-</ul>
-<p>Understanding these different data types is fundamental for selecting appropriate data collection methods, choosing the right analytical tools and techniques, and effectively interpreting the results of data analysis.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Traditional-Dimensions-of-Big-Data-(3-Vs)">Traditional Dimensions of Big Data (3 Vs)<a class="anchor-link" href="#Traditional-Dimensions-of-Big-Data-(3-Vs)">¶</a></h2>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>The concept of "Big Data" is often characterized by several key dimensions that highlight its complexity and the challenges it presents compared to traditional data. The most commonly cited dimensions are the "3 Vs": Volume, Velocity, and Variety. These dimensions were first introduced by Gartner analyst Doug Laney in 2001.</p>
-<h3 id="Volume">Volume<a class="anchor-link" href="#Volume">¶</a></h3><p><strong>Volume</strong> refers to the sheer scale of data being generated, stored, and processed. Big Data involves datasets that are so large they cannot be managed or analyzed effectively using traditional database and data processing tools.</p>
-<ul>
-<li><strong>Explanation:</strong> As data sources proliferate (social media, sensors, transactions, etc.), the amount of data grows exponentially, reaching petabytes, exabytes, or even zettabytes. This massive scale requires distributed storage systems and parallel processing frameworks.</li>
-<li><strong>Importance/Challenge:</strong> Handling such vast quantities of data poses significant challenges in terms of storage costs, processing power, and the time required for analysis. It necessitates scalable infrastructure and efficient data management techniques.</li>
-<li><strong>Example:</strong> A social media platform storing billions of user posts, comments, and interactions daily. A large hadron collider generating petabytes of experimental data every second.</li>
-</ul>
-<h3 id="Velocity">Velocity<a class="anchor-link" href="#Velocity">¶</a></h3><p><strong>Velocity</strong> refers to the speed at which data is generated, collected, and processed. In the context of Big Data, data is often streaming in real-time or near real-time, requiring rapid processing and analysis to extract timely insights.</p>
-<ul>
-<li><strong>Explanation:</strong> Data flows in at unprecedented speeds, often from sources like sensors, financial markets, and online interactions. The value of this data often diminishes quickly, making immediate processing essential for timely decision-making.</li>
-<li><strong>Importance/Challenge:</strong> Dealing with high-velocity data requires real-time data processing capabilities, stream analytics, and low-latency systems. Traditional batch processing methods are often inadequate.</li>
-<li><strong>Example:</strong> Real-time stock trading data, where decisions need to be made in milliseconds. Sensor data from autonomous vehicles being processed instantly to navigate and avoid obstacles.</li>
-</ul>
-<h3 id="Variety">Variety<a class="anchor-link" href="#Variety">¶</a></h3><p><strong>Variety</strong> refers to the different forms and sources of data. Big Data encompasses structured data (like databases), semi-structured data (like JSON or XML), and unstructured data (like text, images, audio, and video).</p>
-<ul>
-<li><strong>Explanation:</strong> Data no longer fits neatly into traditional, structured formats. It comes from diverse sources and in disparate formats, making it challenging to integrate, clean, and analyze using traditional methods designed for structured data.</li>
-<li><strong>Importance/Challenge:</strong> Integrating and analyzing data from such a wide range of formats and sources requires flexible data models, advanced data integration techniques, and analytical tools capable of handling different data types.</li>
-<li><strong>Example:</strong> A company analyzing customer feedback from structured sales databases, semi-structured web server logs, and unstructured social media posts and customer service call transcripts.</li>
-</ul>
-<p><img align="centre" alt="No description has been provided for this image" src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/3Vs.png?raw=true" width="600"/></p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Extended-dimensions-(up-to-7%E2%80%9310-vs)"><strong>Extended dimensions (up to 7–10 vs)</strong><a class="anchor-link" href="#Extended-dimensions-(up-to-7%E2%80%9310-vs)">¶</a></h2>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Beyond the traditional "3 Vs" (Volume, Velocity, Variety), several other dimensions have been proposed to provide a more comprehensive understanding of the complexities and challenges associated with Big Data. These extended 'Vs' highlight aspects related to the quality, trustworthiness, value, and usability of the data.</p>
-<h3 id="Veracity">Veracity<a class="anchor-link" href="#Veracity">¶</a></h3><p><strong>Veracity</strong> refers to the truthfulness, accuracy, and trustworthiness of the data. Big Data often comes from diverse sources, some of which may not be reliable, leading to uncertainty and inaccuracies.</p>
-<ul>
-<li><strong>Explanation:</strong> Data can be noisy, inconsistent, biased, or subject to manipulation. Ensuring the quality and reliability of data is critical for deriving meaningful and actionable insights. Low veracity can lead to flawed analysis and poor decision-making.</li>
-<li><strong>Significance/Challenge:</strong> Dealing with data uncertainty and ensuring data quality requires robust data cleaning, validation, and governance processes. It's essential to understand the source and potential biases of the data.</li>
-<li><strong>Example:</strong> Analyzing social media sentiment where posts might contain sarcasm, slang, or fake information, making it difficult to accurately gauge public opinion. Sensor data from faulty equipment providing inaccurate readings.</li>
-</ul>
-<h3 id="Value">Value<a class="anchor-link" href="#Value">¶</a></h3><p><strong>Value</strong> refers to the potential to transform Big Data into meaningful and useful insights that lead to business value, competitive advantage, or societal benefit. Simply having large amounts of data is not enough; the data must be processed and analyzed to extract value.</p>
-<ul>
-<li><strong>Explanation:</strong> The ultimate goal of collecting and analyzing Big Data is to generate value. This involves identifying relevant data, applying appropriate analytical techniques, and translating the findings into actionable strategies or outcomes.</li>
-<li><strong>Significance/Challenge:</strong> Extracting value from Big Data requires clear objectives, skilled data scientists, appropriate tools, and the ability to integrate insights into decision-making processes. Not all data is equally valuable, and identifying the truly valuable data is a key challenge.</li>
-<li><strong>Example:</strong> A retail company analyzing customer purchase history, website clicks, and loyalty program data to personalize product recommendations and increase sales. A healthcare provider using patient data to predict disease outbreaks and allocate resources effectively.</li>
-</ul>
-<h3 id="Variability">Variability<a class="anchor-link" href="#Variability">¶</a></h3><p><strong>Variability</strong> refers to the inconsistency in the data flow rate and the changes in the structure of the data over time. This is distinct from Variety, which refers to the different types of data formats. Variability deals with the dynamic nature of the data itself.</p>
-<ul>
-<li><strong>Explanation:</strong> The speed and format of incoming data streams can fluctuate significantly. For instance, data from a popular event might spike, while data from a less active source might trickle in slowly. The meaning or context of data points can also change.</li>
-<li><strong>Significance/Challenge:</strong> Managing variability requires flexible processing systems that can adapt to changing data rates and structures. It poses challenges for maintaining consistent data pipelines and ensuring real-time processing capabilities.</li>
-<li><strong>Example:</strong> Website traffic data showing huge spikes during a major online sale event versus normal traffic levels. Sensor data from a manufacturing plant where data streams might vary in frequency depending on the production cycle.</li>
-</ul>
-<h3 id="Visualization">Visualization<a class="anchor-link" href="#Visualization">¶</a></h3><p><strong>Visualization</strong> refers to the ability to effectively present Big Data and the insights derived from it in a clear, understandable, and interactive graphical format. Given the complexity and scale of Big Data, traditional visualization methods are often insufficient.</p>
-<ul>
-<li><strong>Explanation:</strong> Visualizing Big Data helps in exploring patterns, identifying trends, and communicating findings to stakeholders who may not have a technical background. Effective visualization tools are needed to handle the volume and complexity of the data.</li>
-<li><strong>Significance/Challenge:</strong> Creating meaningful and scalable visualizations for massive datasets is challenging. It requires specialized tools and techniques to avoid clutter and effectively convey information without overwhelming the viewer.</li>
-<li><strong>Example:</strong> Using interactive dashboards to display real-time performance metrics from various business units. Creating network graphs to visualize connections in social media data.</li>
-</ul>
-<h3 id="Validity">Validity<a class="anchor-link" href="#Validity">¶</a></h3><p><strong>Validity</strong> refers to the correctness and accuracy of the data for its intended use. While Veracity is about the truthfulness of the data itself, Validity is about whether the data is appropriate and relevant for a specific analytical task.</p>
-<ul>
-<li><strong>Explanation:</strong> Data might be accurate in its raw form (high veracity) but might not be valid for a particular analysis if it's outdated, incomplete for the required scope, or collected under different conditions than the analysis assumes.</li>
-<li><strong>Significance/Challenge:</strong> Ensuring data validity requires a deep understanding of the analytical problem, the data sources, and potential limitations of the data. It involves assessing the data's relevance and suitability for the specific question being asked.</li>
-<li><strong>Example:</strong> Using historical sales data from a period before a major product redesign to predict current sales trends – the data might be accurate (high veracity) but not valid for predicting current trends due to the change.</li>
-</ul>
-<h3 id="Vulnerability">Vulnerability<a class="anchor-link" href="#Vulnerability">¶</a></h3><p><strong>Vulnerability</strong> refers to the security risks associated with storing, processing, and analyzing large and diverse datasets, especially those containing sensitive information. The sheer volume and variety of Big Data increase the potential attack surface.</p>
-<ul>
-<li><strong>Explanation:</strong> Big Data systems can be targets for cyberattacks, data breaches, and privacy violations. Protecting this data is paramount, especially in sectors like healthcare, finance, and government.</li>
-<li><strong>Significance/Challenge:</strong> Securing Big Data requires robust security measures, including encryption, access control, anomaly detection, and compliance with data privacy regulations (like GDPR, CCPA). The distributed nature of many Big Data systems adds complexity to security management.</li>
-<li><strong>Example:</strong> A healthcare organization storing vast amounts of patient health records needing to implement stringent security protocols to prevent breaches and comply with HIPAA regulations.</li>
-</ul>
-<p>These extended dimensions, along with the traditional 3 Vs, provide a more complete picture of the characteristics and challenges of working with Big Data, highlighting the need for sophisticated approaches to data management, processing, analysis, and governance.</p>
-<p><img align="centre" alt="No description has been provided for this image" src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/7Vs.png?raw=true" width="800"/></p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Data-lifecycle">Data lifecycle<a class="anchor-link" href="#Data-lifecycle">¶</a></h2>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>The <strong>data lifecycle</strong> describes the sequence of stages that data goes through from its initial creation or collection to its eventual deletion or archival. Managing data effectively at each stage is crucial for ensuring data quality, accessibility, security, and compliance, as well as for maximizing the value derived from the data.</p>
-<p>Here are the typical stages of the data lifecycle:</p>
-<p><img align="center" alt="No description has been provided for this image" src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/data_lifecycle.png?raw=true" width="600"/></p>
-<h3 id="1.-Data-Generation">1. Data Generation<a class="anchor-link" href="#1.-Data-Generation">¶</a></h3><p>This is the stage where data is created or first collected. Data can be generated from a vast array of sources, both internal and external.</p>
-<ul>
-<li><strong>What happens:</strong> Data is born. This can involve recording transactions, capturing sensor readings, receiving form submissions, logging user activity, digitizing documents, or collecting data from external APIs and sources.</li>
-<li><strong>Purpose/Key Activities:</strong> To create the initial raw data that will be used in subsequent stages. Activities include data entry, data capture, data acquisition, and data scraping.</li>
-</ul>
-<h3 id="2.-Data-Storage">2. Data Storage<a class="anchor-link" href="#2.-Data-Storage">¶</a></h3><p>Once data is generated, it needs to be stored in a secure and accessible manner. The choice of storage depends on the data type, volume, velocity, and access requirements.</p>
-<ul>
-<li><strong>What happens:</strong> Raw or initially processed data is saved to various storage mediums. This can range from simple file systems and databases to data warehouses, data lakes, or cloud storage solutions.</li>
-<li><strong>Purpose/Key Activities:</strong> To preserve the data for future use and processing. Activities include data ingestion, backup, security implementation, and defining storage schemas or structures.</li>
-</ul>
-<h3 id="3.-Data-Processing">3. Data Processing<a class="anchor-link" href="#3.-Data-Processing">¶</a></h3><p>In this stage, the raw data is transformed, cleaned, and organized into a format suitable for analysis. This often involves various data manipulation and transformation techniques.</p>
-<ul>
-<li><strong>What happens:</strong> Data is cleaned (handling missing values, correcting errors, removing duplicates), transformed (aggregating, normalizing, restructuring), and integrated from multiple sources. This stage prepares the data for meaningful analysis.</li>
-<li><strong>Purpose/Key Activities:</strong> To refine and prepare the data for analysis. Activities include data cleaning, transformation, integration, validation, and enrichment.</li>
-</ul>
-<h3 id="4.-Data-Analysis">4. Data Analysis<a class="anchor-link" href="#4.-Data-Analysis">¶</a></h3><p>This is where insights are extracted from the processed data. Various analytical techniques are applied to identify patterns, trends, correlations, and anomalies.</p>
-<ul>
-<li><strong>What happens:</strong> Data scientists and analysts use statistical methods, machine learning algorithms, data mining techniques, and other analytical tools to explore the data and answer specific questions or test hypotheses.</li>
-<li><strong>Purpose/Key Activities:</strong> To discover insights, support decision-making, build models, and derive knowledge from the data. Activities include exploratory data analysis, statistical modeling, predictive modeling, and pattern recognition.</li>
-</ul>
-<h3 id="5.-Data-Visualization">5. Data Visualization<a class="anchor-link" href="#5.-Data-Visualization">¶</a></h3><p>Once insights are gained from the analysis, data visualization is used to present these findings in a clear, understandable, and compelling graphical format.</p>
-<ul>
-<li><strong>What happens:</strong> Analytical results are translated into charts, graphs, dashboards, maps, and other visual representations to communicate findings to stakeholders.</li>
-<li><strong>Purpose/Key Activities:</strong> To effectively communicate complex data insights, make data more accessible and understandable, and facilitate data-driven decision-making. Activities include creating reports, dashboards, and interactive visualizations.</li>
-</ul>
-<h3 id="6.-Archiving/Deletion">6. Archiving/Deletion<a class="anchor-link" href="#6.-Archiving/Deletion">¶</a></h3><p>The final stage involves managing data that is no longer actively used. Depending on regulations, policies, and ongoing needs, data may be archived for future reference or legally compliant deletion.</p>
-<ul>
-<li><strong>What happens:</strong> Data that is no longer needed for daily operations or active analysis but must be retained for compliance or historical purposes is moved to long-term, less accessible storage (archiving). Data that is no longer required and has no legal or business reason to be kept is permanently removed (deletion).</li>
-<li><strong>Purpose/Key Activities:</strong> To manage data storage costs, comply with data retention policies and regulations, and protect privacy by securely disposing of sensitive data when no longer needed. Activities include data retention policy implementation, data backup for archives, and secure data erasure.</li>
-</ul>
-<p>These stages form a continuous cycle, where insights from analysis might lead to the generation of new data or modifications in how data is collected and processed. Effective management throughout this lifecycle is key to leveraging data as a valuable asset.</p>
 </div>
 </div>
 </div>
