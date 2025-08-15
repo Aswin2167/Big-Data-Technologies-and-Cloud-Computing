@@ -222,7 +222,9 @@ const sectionIds = [
   'Data-Types',
   'Traditional-Dimensions-of-Big-Data-(3-Vs)',
   'Extended-dimensions-(up-to-7–10-vs)',
-  'Data-lifecycle'
+  'Data-lifecycle',
+  'Small-Data-vs-Big-Data',
+  'Relevance-to-Big-Data-Technologies'
 ];
 
 function showSection(idx) {
@@ -252,6 +254,8 @@ window.addEventListener('DOMContentLoaded', function() {
     <button onclick="showSection(3)">3 Vs</button>
     <button onclick="showSection(4)">Extended Vs</button>
     <button onclick="showSection(5)">Data lifecycle</button>
+  <button onclick="showSection(6)">Small Data vs Big Data</button>
+  <button onclick="showSection(7)">Relevance to Big Data Technologies</button>
   </nav>
   <div class="main-content">
     <div id="main-page" class="visible-section">
@@ -287,6 +291,108 @@ window.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>
     <!-- The rest of the content will be wrapped in sections for toggling -->
+    <div id="Small-Data-vs-Big-Data" class="hidden-section">
+      <div class="main-card">
+        <h2 class="main-course" style="margin-bottom: 18px;">Small Data vs Big Data</h2>
+        <p style="font-size:1.13em; color:#232946; margin-bottom: 22px;">Understanding the distinction between <strong>"Small Data"</strong> and <strong>"Big Data"</strong> is crucial for choosing the right tools, technologies, and approaches for data management and analysis.</p>
+        <div style="margin-bottom: 18px;">
+          <h3 style="color:#ffbe0b; font-size:1.18em; margin-top:0;">Small Data</h3>
+          <ul>
+            <li><strong>Definition:</strong> Data sets that are relatively small in size and complexity.</li>
+            <li><strong>Scale:</strong> Manageable with traditional data processing tools and techniques.</li>
+            <li><strong>Tools:</strong> Typically processed and analyzed using tools like Microsoft Excel, relational databases (e.g., SQLite, MySQL on a single machine), or simple scripting languages.</li>
+            <li><strong>Characteristics:</strong> Often structured, fits within the memory or storage capacity of a single computer, and can be processed sequentially.</li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 style="color:#ffbe0b; font-size:1.18em; margin-top:0;">Big Data</h3>
+          <ul>
+            <li><strong>Definition:</strong> Data sets that are too large and complex to be handled by traditional data processing applications.</li>
+            <li><strong>Scale:</strong> Requires distributed storage and processing frameworks to manage and analyze.</li>
+            <li><strong>Tools:</strong> Requires specialized technologies and frameworks designed for distributed computing, such as Hadoop, Spark, and cloud-based big data platforms.</li>
+            <li><strong>Characteristics:</strong> Often unstructured or semi-structured, exceeds the capacity of a single machine, and requires parallel processing across multiple nodes in a cluster.</li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 style="color:#232946; font-size:1.13em;">Key Comparison Parameters Table</h3>
+          <table class="main-table">
+            <thead>
+              <tr><th>Aspect</th><th>Big Data</th><th>Small Data</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Volume</td><td>Enormous datasets (terabytes to petabytes)</td><td>Small, manageable datasets</td></tr>
+              <tr><td>Complexity</td><td>Requires advanced tools like Hadoop, AI, and machine learning</td><td>Analyzed using simpler tools like Excel or SQL</td></tr>
+              <tr><td>Processing Speed</td><td>Often processed in real time using distributed systems</td><td>Batch processing or static analysis</td></tr>
+              <tr><td>Data Sources</td><td>IoT devices, social media, transactional systems</td><td>Surveys, logs, or local databases</td></tr>
+              <tr><td>Scalability</td><td>Highly scalable but demands significant infrastructure</td><td>Limited scalability, suitable for focused tasks</td></tr>
+              <tr><td>Cost</td><td>High, due to advanced systems and computational needs</td><td>Relatively low-cost, requiring minimal resources</td></tr>
+              <tr><td>Purpose</td><td>Extracts broad trends and supports predictive analytics</td><td>Provides targeted insights for specific problems</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 style="color:#232946; font-size:1.13em;">Processing Approach</h3>
+          <ul>
+            <li><strong>Small Data:</strong> Centralized processing. Data is stored and processed on a single machine or a limited number of machines. Infrastructure: Single machine or a small server.</li>
+            <li><strong>Big Data:</strong> Distributed processing. Data is partitioned and processed across multiple machines in a cluster. Infrastructure: Clusters of computers (on-premises or in the cloud). Frameworks like Hadoop and Spark enable this distributed processing.</li>
+          </ul>
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 style="color:#232946; font-size:1.13em;">Analytics Complexity</h3>
+          <ul>
+            <li><strong>Small Data:</strong> Basic statistics, simple queries, descriptive analytics. Methods: Often involves calculating averages, sums, percentages, and generating basic charts.</li>
+            <li><strong>Big Data:</strong> More complex analytics, including advanced statistical modeling, machine learning (ML), artificial intelligence (AI), predictive analytics, and prescriptive analytics. Methods: Requires algorithms and techniques designed to handle large volumes and varieties of data, often leveraging distributed computing power.</li>
+          </ul>
+        </div>
+        <div style="display:flex; justify-content:center; margin-bottom:18px;">
+          <img alt="Big vs Small Data" src="https://github.com/Aswin2167/Big-Data-Technologies-and-Cloud-Computing/blob/main/lecture-notes/images/bigVSsmalldata.png?raw=true" style="width:500px; max-width:100%; border-radius:12px; box-shadow:0 2px 12px 0 rgba(35,41,70,0.10);">
+        </div>
+        <div style="margin-bottom: 18px;">
+          <h3 style="color:#232946; font-size:1.13em;">Examples</h3>
+          <ul>
+            <li><strong>Small Data:</strong> A survey dataset from a small focus group; Store transactions for a single store for a week; Customer information in a small business's database; A spreadsheet containing departmental budget data.</li>
+            <li><strong>Big Data:</strong> Social media feeds (tweets, posts, likes, etc.); Data from large-scale Internet of Things (IoT) sensor networks; Website clickstream logs from a major e-commerce platform; Genomic data; Financial market data in real-time; Satellite imagery.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="Relevance-to-Big-Data-Technologies" class="hidden-section">
+      <div class="main-card">
+        <h2 class="main-course" style="margin-bottom: 18px;">Relevance to Big Data Technologies</h2>
+        <p style="font-size:1.13em; color:#232946; margin-bottom: 22px;"><strong>Why Big Data requires parallel computing & scalable storage:</strong></p>
+        <ul>
+          <li><strong>Volume:</strong> The sheer volume of big data exceeds the storage and memory capacity of a single machine. Distributing data across multiple machines (scalable storage) is essential.</li>
+          <li><strong>Velocity:</strong> The high velocity of big data streams requires processing data as it arrives, which is often too fast for sequential processing on a single machine. Parallel computing allows data to be processed concurrently across multiple nodes, keeping up with the data flow.</li>
+          <li><strong>Variety:</strong> The diverse formats and structures of big data make it challenging to store and process using traditional, rigid database schemas. Distributed systems and flexible data models are needed to handle this variety.</li>
+          <li><strong>Processing Time:</strong> Analyzing petabytes or exabytes of data on a single machine would take an unfeasibly long time. Parallel processing divides the computational workload across many machines, significantly reducing processing time.</li>
+          <li><strong>Fault Tolerance:</strong> In a distributed system, if one machine fails, the processing can continue on other machines, providing fault tolerance and ensuring data availability.</li>
+        </ul>
+        <p style="font-size:1.13em; color:#232946; margin-bottom: 22px;"><strong>Introduction to distributed data frameworks (brief lead-in to Spark/Hadoop):</strong></p>
+        <ul>
+          <li><strong>Hadoop:</strong> A foundational open-source framework for distributed storage (Hadoop Distributed File System - HDFS) and processing (MapReduce) of large datasets across clusters of computers. It provides a reliable and scalable way to store and process structured and unstructured data.</li>
+          <li><strong>Spark:</strong> A fast and general-purpose engine for large-scale data processing. Spark can run on top of HDFS or other storage systems and offers significant performance advantages over MapReduce, especially for iterative algorithms and interactive data analysis. It provides APIs in multiple languages (Java, Scala, Python, R).</li>
+        </ul>
+        <p style="font-size:1.13em; color:#232946; margin-bottom: 22px;"><strong>High-level big data ecosystem view:</strong></p>
+        <p style="display:flex; justify-content:center;">
+          <img alt="Big Data Layers" src="https://www.rcvacademy.com/wp-content/uploads/2016/11/different-layers-of-big-data.png.webp" style="width:500px; max-width:100%; border-radius:12px; box-shadow:0 2px 12px 0 rgba(35,41,70,0.10);">
+        </p>
+        <p><a href="https://www.rcvacademy.com/big-data-layers/" target="_blank">Source</a></p>
+        <ul>
+          <li><strong>Storage Layer:</strong> Responsible for storing vast amounts of data in a distributed and fault-tolerant manner. Examples include HDFS, Amazon S3, Google Cloud Storage, and NoSQL databases (e.g., Cassandra, MongoDB).</li>
+        </ul>
+        <p style="display:flex; justify-content:center;">
+          <img alt="Big Data Storage Solutions" src="https://media.licdn.com/dms/image/v2/D5612AQHGmYP_L28mjQ/article-inline_image-shrink_1000_1488/article-inline_image-shrink_1000_1488/0/1719210460398?e=2147483647&amp;v=beta&amp;t=8wZN_0OooIn5-t-jsyWftEsbfwwgjb-X-EeWoz7CMAA" style="width:500px; max-width:100%; border-radius:12px; box-shadow:0 2px 12px 0 rgba(35,41,70,0.10);">
+        </p>
+        <p><a href="https://www.linkedin.com/pulse/big-data-storage-solutions-comparing-hdfs-amazon-adls-srinivasan-pnjoc" target="_blank">Source</a></p>
+        <ul>
+          <li><strong>Processing Layer:</strong> Provides the computational power and frameworks for processing and analyzing the stored data. Examples include Hadoop MapReduce, Apache Spark, Apache Flink, and processing engines within cloud platforms.</li>
+          <li><strong>Analytics Layer:</strong> Includes tools and libraries for performing various types of analysis, including statistical analysis, machine learning, graph processing, and streaming analytics. Examples include Apache Hive, Apache Pig, Spark MLlib, TensorFlow, and various business intelligence (BI) tools.</li>
+          <li><strong>Other Layers:</strong> The ecosystem also includes layers for data ingestion (e.g., Apache Kafka, Apache Flume), resource management (e.g., Apache YARN), and orchestration (e.g., Apache Oozie, Apache Airflow).</li>
+        </ul>
+        <p>Understanding these layers and the technologies within them is essential for building and managing big data solutions.</p>
+      </div>
+    </div>
     <div id="Definition-of-Data:" class="hidden-section">
       <div class="main-card">
         <h2 class="main-course" style="margin-bottom: 18px;">Definition of Data</h2>
