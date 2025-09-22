@@ -1,0 +1,3 @@
+{ "id": "S101", "name": "Ananya Rao", "email": "ananya.rao@example.edu", "department": "Computer Science", "year": 3, "skills": ["Python", "Data Analysis", "Git"], "placement_status": "Eligible" }
+{ "id": "S102", "name": "Rohan Mehta", "email": "rohan.mehta@example.edu", "department": "Electronics", "year": 4, "skills": ["Embedded Systems", "C++", "MATLAB"], "placement_status": "Placed" }
+{ "id": "S103", "name": "Meera Nair", "email": "meera.nair@example.edu", "department": "Information Technology", "year": 2, "skills": ["HTML", "CSS", "JavaScript"], "placement_status": "Not Eligible" }
